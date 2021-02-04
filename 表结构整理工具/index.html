@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表整理工具</title>
+    <script src="js-xlsx/xlsx.js"></script>
+    <script src="js/jquery.js"></script>
+</head>
+
+<body>
+    表名：<input type="text" id="tbname"> <br>
+    内容：<textarea name="in" id="in" cols="30" rows="10"></textarea><br>
+    <button id='btn' onclick="show()">生成</button>
+    <button id='btn' onclick="output()">导出</button>
+    <table border="1" id="tb">
+    </table>
+
+    <script>
+        function output() {
+            var str = $("#in").val();
+            var tbname = $("#tbname").val();
+            str_arry = str.split(",")
+            var data = [[tbname],['字段','类型','说明']]
+            for (i = 0; i < str_arry.length; i++) {
+                b = str_arry[i];
+                c = b.split(":");
+                data.push(c);
+            }
+            /* create a new blank workbook */
+            var wb = XLSX.utils.book_new();
+            var new_ws_name = "SheetJS";
+            var ws = XLSX.utils.aoa_to_sheet(data);
+            /* Add the worksheet to the workbook */
+            XLSX.utils.book_append_sheet(wb, ws, "ws_name");
+            // 写入文件
+            XLSX.writeFile(wb, tbname+"_out.xls");
+
+        }
+
+        function show(){
+            var str = $("#in").val();
+            var html = "<tr><th>字段</th><th>类型</th><th>说明</th></tr>";
+            str_arry = str.split(", ")
+            var data = []
+            for (i = 0; i < str_arry.length; i++) {
+                b = str_arry[i];
+                c = b.split(": ");
+                data.push(c);
+                html += '<tr><td>'+c[0]+'</td><td>'+c[1]+'</td><td></td></tr>' 
+            }
+            // console.log(data)
+            $("#tb").html(html);
+        
+        }
+
+    </script>
+</body>
+
+</html>

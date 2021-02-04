@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>util</title>  
+    <script src="js/jquery.js"></script>  
+</head>
+<textarea name="in" id="in" cols="100" rows="20"></textarea>
+<button id='btn' onclick="output()">生成</button>
+<table border="1" id="tb">
+</table>
+<div id="md"></div>
+
+<body>
+    <script>
+        function output() {
+            var str = $("#in").val();
+            var html = "<tr><th>字段</th><th>类型</th><th>说明</th></tr>";
+            str_arry = str.split(",")
+            var data = []
+            for (i = 0; i < str_arry.length; i++) {
+                b = str_arry[i];
+                c = b.split(":");
+                html += '<tr><td>'+c[0]+'</td><td>'+c[1]+'</td><td></td></tr>' 
+            }
+            $("#tb").html(html);
+        }
+    </script>
+</body>
+
+</html>
